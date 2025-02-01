@@ -14,11 +14,14 @@ public class FormController {
     private List<Pergunta> perguntas = new ArrayList<>();
     private List<Usuario> usuarios = new ArrayList<>();
     private int contador = carregarContador();
-    private static final String ARQUIVO_CONTADOR = "D:\\Projetos Intellij Java\\Projeto-cadastr-devMagro\\contador\\contador.txt";
+    private static final String ARQUIVO_CONTADOR = "./contador/contador.txt";
+    private final String CAMINHO_ARQUIVO_USUARIOS = "./usuarios";
+    private final String CAMINHO_ARQUIVO_FORMULARIO = "./formulario.txt";
 
-    public void carregarPergunta(String arquivo){
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            String item ;
+    public void carregarPergunta(){
+        perguntas.clear();
+        try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO_FORMULARIO))) {
+            String item;
             while ((item = br.readLine()) != null){
                 String[] partes =  item.split(" - ", 2);
                 int numero = Integer.parseInt(partes[0]);
@@ -31,13 +34,12 @@ public class FormController {
     }
 
     public void salvarUsuario(Usuario usuario){
-        String diretorio = "D:\\Projetos Intellij Java\\Projeto-cadastr-devMagro\\usuarios";
-        File pasta =  new File(diretorio);
+        File pasta =  new File(CAMINHO_ARQUIVO_USUARIOS);
         if (!pasta.exists()){
             pasta.mkdir();
         }
 
-        String nomeArquivo = diretorio + "\\" + contador + "-" + usuario.getNome().replace(" ", "").toUpperCase() + ".txt";
+        String nomeArquivo = CAMINHO_ARQUIVO_USUARIOS + "\\" + contador + "-" + usuario.getNome().replace(" ", "").toUpperCase() + ".txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo))){
 
                 bw.write("Nome: " + usuario.getNome());
@@ -70,7 +72,7 @@ public class FormController {
     }
 
     private void salvarContador(int contador){
-        String diretorio = "D:\\Projetos Intellij Java\\Projeto-cadastr-devMagro\\contador";
+        String diretorio = "./contador";
         File pasta =  new File(diretorio);
         if (!pasta.exists()){
             pasta.mkdir();
@@ -83,13 +85,11 @@ public class FormController {
         }
     }
 
-
     public List<Pergunta> getPerguntas() {
         return perguntas;
     }
 
     public Usuario responderPerguntas(){
-
         try {
             var nome = sc.nextLine();
             var email = sc.nextLine();
@@ -102,10 +102,63 @@ public class FormController {
             sc.nextLine();
             return responderPerguntas();
         }
-
     }
 
     public void adicionarUsuario(Usuario usuario){
         usuarios.add(usuario);
+    }
+
+    public void listarUsuarios(){
+        File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
+        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null || pastaUsuarios.listFiles().length == 0) {
+            System.out.println("Nenhum usuário cadastrado.");
+            return;
+        }
+        int contador = 1;
+        for (File arquivo : pastaUsuarios.listFiles()){
+            if (arquivo.isFile()){
+                try (BufferedReader br = new BufferedReader(new FileReader(arquivo))){
+                    String linha = br.readLine();
+                    if (linha != null && linha.startsWith("Nome: ")){
+                        String nome = linha.replace("Nome: ", "");
+                        System.out.println(contador + " - " + nome);
+                        contador++;
+                    }
+                } catch (IOException e){
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void cadastrarPergunta() {
+        System.out.println("Digite a pergunta a se adicionada: ");
+        String perguntaAdiconada = sc.nextLine();
+        try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO_FORMULARIO))) {
+            int numeroPerguntas = 0;
+            while (br.readLine() != null) {
+                numeroPerguntas++;
+            }
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO_FORMULARIO, true))) {
+                bw.write((numeroPerguntas + 1) + " - " + perguntaAdiconada);
+                bw.newLine();
+            }
+
+            System.out.println("Pergunta adicionada com sucesso!");
+        }catch (IOException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void deletarPergunta() {
+        System.out.print("Digite o número da pergunta a ser deletada(Você não pode deletar as 4 primeiras perguntas): ");
+        int numero = sc.nextInt();
+
+        if (numero <= 4){
+            System.out.println("Não é possivel deletar as 4 primeiras perguntas.");
+            return;
+        }
+
+
     }
 }

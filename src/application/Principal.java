@@ -5,26 +5,45 @@ import model.entity.Usuario;
 import view.Form;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Principal {
-    private final String CAMINHO_ARQUIVO = "D:\\Projetos Intellij Java\\Projeto-cadastr-devMagro\\formulario.txt";
+    FormController formController = new FormController();
+    Form view = new Form();
 
-    public String getCAMINHO_ARQUIVO() {
-        return CAMINHO_ARQUIVO;
+
+    Scanner sc = new Scanner(System.in);
+
+    public void menu() {
+        int opcao;
+        do {
+            System.out.println("""
+                Digite uma das opções:
+                1 - Cadastar o usuário.
+                2 - Listar todos usuários cadastrados.
+                3 - Cadastar nova pergunta no formulário.
+                4 - Deletar pergunta do formulãrio.
+                5 - Pesquisar usuário por nome, idade ou email.
+                0 - Sair.
+                """);
+            opcao = sc.nextInt();
+
+            switch (opcao){
+                case 0: System.out.println("Encerrando o programa...."); return;
+                case 1: cadastrarUsuario(); break;
+                case 2: listarUsuario(); break;
+                case 3: cadastrarPergunta(); break;
+                case 4: deletarPergunta(); break;
+                case 5: pesquisarUsuario(); break;
+                default: System.out.println("Opção inválida. ");
+            }
+        } while (opcao != 0);
     }
 
-    public void Principal(){
-        Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
-
-        FormController formController = new FormController();
-        Form view = new Form();
-
-        try{
+    public void cadastrarUsuario() {
+        try {
             System.out.println("Responda ao formulário: ");
-            formController.carregarPergunta(CAMINHO_ARQUIVO);
+            formController.carregarPergunta();
             view.exibirPerguntas(formController.getPerguntas());
 
             Usuario usuario = formController.responderPerguntas();
@@ -33,11 +52,19 @@ public class Principal {
             view.exibirUsuario(List.of(usuario));
             formController.salvarUsuario(usuario);
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
+    }
+    private void listarUsuario() {
+        formController.listarUsuarios();
+    }
+    private void cadastrarPergunta() {
+        formController.cadastrarPergunta();
+    }
+    private void deletarPergunta() {
+        formController.deletarPergunta();
+    }
+    private void pesquisarUsuario() {
     }
 }

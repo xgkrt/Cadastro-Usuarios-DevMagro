@@ -1,0 +1,4 @@
+Nome: Lucas guedes
+Email: lucas@gmail.com
+Idade: 24
+Altura: 1.74
