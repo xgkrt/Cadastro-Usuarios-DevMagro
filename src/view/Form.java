@@ -15,7 +15,7 @@ public class Form {
     public void exibirUsuario(List<Usuario> usuarios){
         System.out.println("\nInformações do usuario: ");
         for(Usuario usuario : usuarios){
-            System.out.println(usuarios);
+            System.out.println(usuario);
         }
     }
 }

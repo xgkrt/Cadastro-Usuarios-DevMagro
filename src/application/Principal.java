@@ -23,10 +23,11 @@ public class Principal {
                 2 - Listar todos usuários cadastrados.
                 3 - Cadastar nova pergunta no formulário.
                 4 - Deletar pergunta do formulãrio.
-                5 - Pesquisar usuário por nome, idade ou email.
+                5 - Pesquisar usuário por nome.
                 0 - Sair.
                 """);
             opcao = sc.nextInt();
+            sc.nextLine();
 
             switch (opcao){
                 case 0: System.out.println("Encerrando o programa...."); return;
@@ -40,7 +41,7 @@ public class Principal {
         } while (opcao != 0);
     }
 
-    public void cadastrarUsuario() {
+    private void cadastrarUsuario() {
         try {
             System.out.println("Responda ao formulário: ");
             formController.carregarPergunta();
@@ -66,5 +67,15 @@ public class Principal {
         formController.deletarPergunta();
     }
     private void pesquisarUsuario() {
+        System.out.println("Digite o nome do usuario para buscar: ");
+        String nomeUsuario = sc.nextLine().toUpperCase();
+        List<String> listaUsuario = formController.pesquisarUsuario(nomeUsuario);
+
+        if (listaUsuario.isEmpty()){
+            System.out.println("Nenhum usuario encontrado.");
+        } else {
+            System.out.println("\nUsuarios encontrados: ");
+            listaUsuario.forEach(System.out::println);
+        }
     }
 }

@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="de34d426-140a-490c-96a9-b579300e06f0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contador/contador.txt" beforeDir="false" afterPath="$PROJECT_DIR$/contador/contador.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/formulario.txt" beforeDir="false" afterPath="$PROJECT_DIR$/formulario.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/Principal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Principal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/FormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/entity/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/entity/Pessoa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/entity/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/entity/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Form.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +29,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;xgkrt&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/xgkrt/Cadastro-Usuarios-DevMagro.git&quot;,
+    &quot;accountId&quot;: &quot;15b1845f-3fcd-4c5f-b17e-59afefc2831e&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.jdks/openjdk-23.0.1/lib/src.zip!/java.base/java/lang/String.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -36,13 +54,20 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projetos Intellij Java/Projeto-cadastr-devMagro&quot;
+    &quot;last_opened_file_path&quot;: &quot;D:/Projetos Intellij Java/Projeto-cadastr-devMagro&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -72,7 +97,29 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1738001839633</updated>
+      <workItem from="1739914674065" duration="1915000" />
+      <workItem from="1740185342433" duration="578000" />
+      <workItem from="1740270751775" duration="805000" />
+      <workItem from="1740439197320" duration="231000" />
+      <workItem from="1740448912022" duration="602000" />
+      <workItem from="1740612251845" duration="2643000" />
+      <workItem from="1740679183800" duration="595000" />
+      <workItem from="1740684815983" duration="5576000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
