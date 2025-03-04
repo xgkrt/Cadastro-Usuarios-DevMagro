@@ -4,4 +4,3 @@
 4 - Qual sua altura?
 5 - Qual sua linguagem preferida?
 6 - Framework prefirdo?
-7 - Melhor metodo agil

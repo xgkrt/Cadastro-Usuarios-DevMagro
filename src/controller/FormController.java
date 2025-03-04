@@ -1,6 +1,9 @@
 package controller;
 
+import exceptions.ValidacaoException;
+import exceptions.ValidacaoUsuario;
 import model.entity.Pergunta;
+import model.entity.Pessoa;
 import model.entity.Usuario;
 import view.Form;
 
@@ -17,6 +20,7 @@ public class FormController {
     private static final String ARQUIVO_CONTADOR = "./contador/contador.txt";
     private final String CAMINHO_ARQUIVO_USUARIOS = "./usuarios";
     private final String CAMINHO_ARQUIVO_FORMULARIO = "./formulario.txt";
+    private ValidacaoUsuario validacao = new ValidacaoUsuario();
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -109,6 +113,21 @@ public class FormController {
             respostas.add(resposta);
         }
 
+        carregarUsuarios();
+        try {
+            validacao.validarUsuario(
+                    respostas.get(0),
+                    respostas.get(1),
+                    Integer.parseInt(respostas.get(2)),
+                    respostas.get(3),
+                    usuarios);
+        } catch (ValidacaoException e){
+            System.out.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String nome = respostas.get(0);
         String email = respostas.get(1);
         Integer idade = Integer.parseInt(respostas.get(2));
@@ -174,48 +193,82 @@ public class FormController {
         carregarPergunta();
         view.exibirPerguntas(getPerguntas());
         List<String> perguntas = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO_FORMULARIO))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                perguntas.add(linha);
+
+        try {
+            try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO_FORMULARIO))) {
+                String linha;
+                while ((linha = br.readLine()) != null) {
+                    perguntas.add(linha);
+                }
             }
-        } catch (IOException e ) {
-            System.out.println("Error: " + e.getMessage());
-            return;
-        }
+            System.out.print("\nDigite o número da pergunta a ser deletada(Você não pode deletar as 4 primeiras perguntas): ");
+            int numero = sc.nextInt();
+            sc.nextLine();
 
-        System.out.print("\nDigite o número da pergunta a ser deletada(Você não pode deletar as 4 primeiras perguntas): ");
-        int numero = sc.nextInt();
-        sc.nextLine();
+            validacao.deletarPergunta(numero, perguntas.size());
+            perguntas.remove(numero - 1);
 
-        if (numero <= 4) {
-            System.out.println("Não é possível deletar as 4 primeiras perguntas.");
-            return;
-        }
-        if (numero > perguntas.size()){
-            System.out.println("Número inválido! Pergunta não existe.");
-            return;
-        }
-        perguntas.remove(numero - 1);
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO_FORMULARIO))){
-            for (int i = 0; i < perguntas.size() ; i++) {
-                String formularioAtualizado = (i + 1) + " - " + perguntas.get(i).split(" - ", 2)[1];
-                bw.write(formularioAtualizado);
-                bw.newLine();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO_FORMULARIO))) {
+                for (int i = 0; i < perguntas.size(); i++) {
+                    String formularioAtualizado = (i + 1) + " - " + perguntas.get(i).split(" - ", 2)[1];
+                    bw.write(formularioAtualizado);
+                    bw.newLine();
+                }
             }
-        } catch (IOException e ) {
+        } catch (ValidacaoException e){
+            System.out.println(e.getMessage());
+        } catch (IOException e){
             System.out.println("Error: " + e.getMessage());
+        } catch (InputMismatchException e) {
+            System.out.println("Digite somente números!");
         }
-        System.out.println("\n Pergunta deletada com sucesso!");
     }
 
-    public List<String> pesquisarUsuario(String nomeUsuario) {
-
+    public List<Usuario> pesquisarUsuario(String nomeUsuario) {
+        carregarUsuarios();
         return usuarios.stream()
                 .filter(usuario -> usuario.getNome().toUpperCase().contains(nomeUsuario))
-                .map(Usuario::getNome)
-                .sorted(String::compareToIgnoreCase)
+                .sorted(Comparator.comparing(Pessoa::getNome, String.CASE_INSENSITIVE_ORDER))
                 .toList();
+    }
+
+    private void carregarUsuarios() {
+        usuarios.clear();
+        File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
+        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null || pastaUsuarios.listFiles().length == 0) {
+            return;
+        }
+
+        for (File arquivo : pastaUsuarios.listFiles()) {
+            if (arquivo.isFile()) {
+                try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+                    String nome = null;
+                    String email = null;
+                    Integer idade = null;
+                    Double altura = null;
+                    List<String> respostasAdicionais = new ArrayList<>();
+
+                    String linha;
+                    while ((linha = br.readLine()) != null) {
+                        if (linha.startsWith("Nome: ")) {
+                            nome = linha.replace("Nome: ", "");
+                        } else if (linha.startsWith("Email: ")) {
+                            email = linha.replace("Email: ", "");
+                        } else if (linha.startsWith("Idade: ")) {
+                            idade = Integer.parseInt(linha.replace("Idade: ", ""));
+                        } else if (linha.startsWith("Altura: ")) {
+                            altura = Double.parseDouble(linha.replace("Altura: ", ""));
+                        } else if (linha.startsWith("Pergunta ")) {
+                            respostasAdicionais.add(linha.split(": ", 2)[1]);
+                        }
+                    }
+                    if (nome != null) {
+                        usuarios.add(new Usuario(nome, idade, email, altura, respostasAdicionais));
+                    }
+                } catch (IOException e) {
+                    System.out.println("Erro ao carregar arquivo " + arquivo.getName() + ": " + e.getMessage());
+                }
+            }
+        }
     }
 }

@@ -48,7 +48,10 @@ public class Principal {
             view.exibirPerguntas(formController.getPerguntas());
 
             Usuario usuario = formController.responderPerguntas();
-
+            if (usuario == null) {
+                System.out.println("Cadastro cancelado.");
+                return;
+            }
             formController.adicionarUsuario(usuario);
             view.exibirUsuario(List.of(usuario));
             formController.salvarUsuario(usuario);
@@ -69,13 +72,13 @@ public class Principal {
     private void pesquisarUsuario() {
         System.out.println("Digite o nome do usuario para buscar: ");
         String nomeUsuario = sc.nextLine().toUpperCase();
-        List<String> listaUsuario = formController.pesquisarUsuario(nomeUsuario);
+        List<Usuario> listaUsuario = formController.pesquisarUsuario(nomeUsuario);
 
         if (listaUsuario.isEmpty()){
             System.out.println("Nenhum usuario encontrado.");
         } else {
             System.out.println("\nUsuarios encontrados: ");
-            listaUsuario.forEach(System.out::println);
+            view.exibirUsuario(listaUsuario);
         }
     }
 }
