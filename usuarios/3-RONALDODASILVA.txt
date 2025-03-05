@@ -1,4 +1,0 @@
-Nome: Ronaldo da Silva
-Email: ronaldo@gmail.com
-Idade: 60
-Altura: 1.7
