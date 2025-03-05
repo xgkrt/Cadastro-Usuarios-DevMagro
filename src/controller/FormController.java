@@ -112,8 +112,8 @@ public class FormController {
             String resposta = sc.nextLine();
             respostas.add(resposta);
         }
-
         carregarUsuarios();
+
         try {
             validacao.validarUsuario(
                     respostas.get(0),
@@ -121,21 +121,24 @@ public class FormController {
                     Integer.parseInt(respostas.get(2)),
                     respostas.get(3),
                     usuarios);
-        } catch (ValidacaoException e){
+
+            String nome = respostas.get(0);
+            String email = respostas.get(1);
+            Integer idade = Integer.parseInt(respostas.get(2));
+            Double altura = Double.parseDouble(respostas.get(3).replace(",", "."));
+
+            List<String> respostasAdicionar = respostas.size() > 4 ? respostas.subList(4, respostas.size()) : new ArrayList<>();
+            return new Usuario(nome, idade, email, altura, respostasAdicionar);
+        } catch (ValidacaoException e) {
             System.out.println(e.getMessage());
+            return null;
+        } catch (NumberFormatException e) {
+            System.out.println("Idade e altura so pode ser númericos!");
             return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        String nome = respostas.get(0);
-        String email = respostas.get(1);
-        Integer idade = Integer.parseInt(respostas.get(2));
-        Double altura = Double.parseDouble(respostas.get(3).replace(",", "."));
-
-        List<String> respostasAdicionar = respostas.size() > 4 ? respostas.subList(4, respostas.size()) : new ArrayList<>();
-
-        return new Usuario(nome, idade, email, altura, respostasAdicionar);
+        return null;
     }
 
     public void adicionarUsuario(Usuario usuario) {
@@ -171,14 +174,14 @@ public class FormController {
         view.exibirPerguntas(getPerguntas());
 
         System.out.println("\nDigite a pergunta a se adicionada: ");
-        String perguntaAdiconada = sc.nextLine();
+        String perguntaAdicionada = sc.nextLine();
         try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO_FORMULARIO))) {
             int numeroPerguntas = 0;
             while (br.readLine() != null) {
                 numeroPerguntas++;
             }
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO_FORMULARIO, true))) {
-                bw.write((numeroPerguntas + 1) + " - " + perguntaAdiconada);
+                bw.write((numeroPerguntas + 1) + " - " + perguntaAdicionada);
                 bw.newLine();
             }
 
@@ -215,6 +218,7 @@ public class FormController {
                     bw.newLine();
                 }
             }
+            System.out.println("Pergunta deletada com sucesso!");
         } catch (ValidacaoException e){
             System.out.println(e.getMessage());
         } catch (IOException e){

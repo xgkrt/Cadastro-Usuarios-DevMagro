@@ -20,7 +20,7 @@ public class ValidacaoUsuario {
         }
 
         if (alturaStr == null || !alturaStr.contains(",")){
-            throw new ValidacaoException("A altura deve ser infomada com ','");
+            throw new ValidacaoException("A altura deve ser informada com ','");
         }
 
         for (Usuario u : usuarios){

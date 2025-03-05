@@ -1,12 +1,13 @@
 package model.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Usuario extends Pessoa{
     private String email;
     private Double altura;
-    private List<String> perguntaAdicional;
+    private List<String> perguntaAdicional = Collections.emptyList();
 
     public Usuario(String nome, Integer idade, String email, Double altura) {
         this(nome, idade, email, altura, null);
