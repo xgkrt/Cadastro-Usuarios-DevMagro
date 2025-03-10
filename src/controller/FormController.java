@@ -76,16 +76,19 @@ public class FormController {
     }
 
     private int carregarContador() {
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_CONTADOR))) {
-            String linha = br.readLine();
-            if (linha != null) {
-                return Integer.parseInt(linha);
-            } else {
-                return 1;
+        int contadorUsuarios = 0;
+
+        File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
+        if (pastaUsuarios.exists() && pastaUsuarios.isDirectory()){
+            File[] arquivos = pastaUsuarios.listFiles((dir, name) -> name.endsWith(".txt"));
+            if (arquivos!= null){
+                contadorUsuarios = arquivos.length;
             }
-        } catch (IOException e) {
-            return 1;
         }
+
+        int proximoContador = contadorUsuarios + 1;
+        salvarContador(proximoContador);
+        return proximoContador;
     }
 
     private void salvarContador(int contador) {
