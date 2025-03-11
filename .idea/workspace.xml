@@ -39,6 +39,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.jdks/openjdk-23.0.1/lib/src.zip!/java.base/java/lang/String.java" root0="SKIP_INSPECTION" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -117,7 +120,7 @@
       <workItem from="1741189236054" duration="791000" />
       <workItem from="1741190996479" duration="595000" />
       <workItem from="1741209105046" duration="4022000" />
-      <workItem from="1741646681049" duration="946000" />
+      <workItem from="1741646681049" duration="3642000" />
     </task>
     <servers />
   </component>

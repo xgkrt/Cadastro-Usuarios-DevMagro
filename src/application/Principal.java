@@ -77,7 +77,7 @@ public class Principal {
             formController.salvarUsuario(usuario);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

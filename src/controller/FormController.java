@@ -80,7 +80,7 @@ public class FormController {
 
         File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
         if (pastaUsuarios.exists() && pastaUsuarios.isDirectory()){
-            File[] arquivos = pastaUsuarios.listFiles((dir, name) -> name.endsWith(".txt"));
+            File[] arquivos = pastaUsuarios.listFiles();
             if (arquivos!= null){
                 contadorUsuarios = arquivos.length;
             }
@@ -139,7 +139,7 @@ public class FormController {
             System.out.println("Idade e altura so pode ser númericos!");
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
         return null;
     }
@@ -150,7 +150,7 @@ public class FormController {
 
     public void listarUsuarios() {
         File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
-        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null || pastaUsuarios.listFiles().length == 0) {
+        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null) {
             System.out.println("Nenhum usuário cadastrado.");
             return;
         }
@@ -242,7 +242,7 @@ public class FormController {
     private void carregarUsuarios() {
         usuarios.clear();
         File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
-        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null || pastaUsuarios.listFiles().length == 0) {
+        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null) {
             return;
         }
 
