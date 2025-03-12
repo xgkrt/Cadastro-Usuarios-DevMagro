@@ -42,11 +42,7 @@ public class FormController {
     }
 
     public void salvarUsuario(Usuario usuario) {
-        File pasta = new File(CAMINHO_ARQUIVO_USUARIOS);
-        if (!pasta.exists()) {
-            pasta.mkdir();
-        }
-
+        criarDiretorio(CAMINHO_ARQUIVO_USUARIOS);
         String nomeArquivo = CAMINHO_ARQUIVO_USUARIOS + "\\" + contador + "-" + usuario.getNome().replace(" ", "").toUpperCase() + ".txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo))) {
 
@@ -92,11 +88,7 @@ public class FormController {
     }
 
     private void salvarContador(int contador) {
-        String diretorio = "./contador";
-        File pasta = new File(diretorio);
-        if (!pasta.exists()) {
-            pasta.mkdir();
-        }
+        criarDiretorio("./contador");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO_CONTADOR))) {
             bw.write(String.valueOf(contador));
         } catch (IOException e) {
@@ -149,32 +141,20 @@ public class FormController {
     }
 
     public void listarUsuarios() {
-        File pastaUsuarios = new File(CAMINHO_ARQUIVO_USUARIOS);
-        if (!pastaUsuarios.exists() || pastaUsuarios.listFiles() == null) {
-            System.out.println("Nenhum usuário cadastrado.");
-            return;
+        carregarUsuarios();
+        if (usuarios.isEmpty()){
+            System.out.println("Nenhum usuário cadastrado!");
         }
         int contador = 1;
-        for (File arquivo : pastaUsuarios.listFiles()) {
-            if (arquivo.isFile()) {
-                try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-                    String linha = br.readLine();
-                    if (linha != null && linha.startsWith("Nome: ")) {
-                        String nome = linha.replace("Nome: ", "");
-                        System.out.println(contador + " - " + nome);
-                        contador++;
-                    }
-                } catch (IOException e) {
-                    System.out.println("Error: " + e.getMessage());
-                }
-            }
+        for (Usuario u : usuarios){
+            System.out.println(contador + " - " + u.getNome());
+            contador++;
         }
     }
 
     public void cadastrarPergunta() {
         System.out.println("Perguntas do formulario: ");
-        carregarPergunta();
-        view.exibirPerguntas(getPerguntas());
+        exibirFormulario();
 
         System.out.println("\nDigite a pergunta a se adicionada: ");
         String perguntaAdicionada = sc.nextLine();
@@ -196,8 +176,7 @@ public class FormController {
 
     public void deletarPergunta() {
         System.out.println("Perguntas do formulario: ");
-        carregarPergunta();
-        view.exibirPerguntas(getPerguntas());
+        exibirFormulario();
         List<String> perguntas = new ArrayList<>();
 
         try {
@@ -276,6 +255,18 @@ public class FormController {
                     System.out.println("Erro ao carregar arquivo " + arquivo.getName() + ": " + e.getMessage());
                 }
             }
+        }
+    }
+
+    public void exibirFormulario(){
+        carregarPergunta();
+        view.exibirPerguntas(getPerguntas());
+    }
+
+    private void criarDiretorio(String caminho){
+        File pasta = new File(caminho);
+        if (!pasta.exists()) {
+            pasta.mkdir();
         }
     }
 }

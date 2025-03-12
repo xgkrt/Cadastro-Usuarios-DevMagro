@@ -28,7 +28,6 @@ public class Principal {
                         """);
                 String opcao = sc.nextLine();
                 int opc = Integer.parseInt(opcao);
-                //sc.nextLine();
 
                 switch (opc) {
                     case 0:
@@ -64,8 +63,7 @@ public class Principal {
     private void cadastrarUsuario() {
         try {
             System.out.println("Responda ao formulário: ");
-            formController.carregarPergunta();
-            view.exibirPerguntas(formController.getPerguntas());
+            formController.exibirFormulario();
 
             Usuario usuario = formController.responderPerguntas();
             if (usuario == null) {
