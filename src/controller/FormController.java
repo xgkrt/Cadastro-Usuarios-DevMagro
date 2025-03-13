@@ -63,7 +63,7 @@ public class FormController {
                 }
             }
 
-            System.out.println("Arquivo salvo com sucesso: " + nomeArquivo);
+            System.out.println("Usuário salvo com sucesso!");
             contador++;
             salvarContador(contador);
         } catch (IOException e) {
@@ -107,7 +107,6 @@ public class FormController {
             String resposta = sc.nextLine();
             respostas.add(resposta);
         }
-        carregarUsuarios();
 
         try {
             validacao.validarUsuario(
