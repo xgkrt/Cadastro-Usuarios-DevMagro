@@ -10,12 +10,10 @@ import java.util.Scanner;
 public class Principal {
     FormController formController = new FormController();
     Form view = new Form();
-
-
     Scanner sc = new Scanner(System.in);
 
     public void menu() {
-        while (true){
+        while (true) {
             try {
                 System.out.println("""
                         Digite uma das opções:
@@ -94,13 +92,17 @@ public class Principal {
     private void pesquisarUsuario() {
         System.out.println("Digite o nome do usuario para buscar: ");
         String nomeUsuario = sc.nextLine().toUpperCase();
-        List<Usuario> listaUsuario = formController.pesquisarUsuario(nomeUsuario);
-
-        if (listaUsuario.isEmpty()) {
-            System.out.println("Nenhum usuario encontrado.");
+        if (nomeUsuario.equals("")) {
+            System.out.println("Digite um nome válido!");
         } else {
-            System.out.println("\nUsuarios encontrados: ");
-            view.exibirUsuario(listaUsuario);
+            List<Usuario> listaUsuario = formController.pesquisarUsuario(nomeUsuario);
+
+            if (listaUsuario.isEmpty()) {
+                System.out.println("Nenhum usuario encontrado.");
+            } else {
+                System.out.println("\nUsuarios encontrados: ");
+                view.exibirUsuario(listaUsuario);
+            }
         }
     }
 }
