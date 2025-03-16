@@ -92,7 +92,7 @@ public class Principal {
     private void pesquisarUsuario() {
         System.out.println("Digite o nome do usuario para buscar: ");
         String nomeUsuario = sc.nextLine().toUpperCase();
-        if (nomeUsuario.equals("")) {
+        if (nomeUsuario.isEmpty()) {
             System.out.println("Digite um nome válido!");
         } else {
             List<Usuario> listaUsuario = formController.pesquisarUsuario(nomeUsuario);

@@ -104,6 +104,7 @@ public class FormController {
         List<String> respostas = new ArrayList<>();
 
         for (Pergunta pergunta : perguntas) {
+            System.out.println(pergunta.toString());
             String resposta = sc.nextLine();
             respostas.add(resposta);
         }
@@ -259,7 +260,6 @@ public class FormController {
 
     public void exibirFormulario(){
         carregarPergunta();
-        view.exibirPerguntas(getPerguntas());
     }
 
     private void criarDiretorio(String caminho){
